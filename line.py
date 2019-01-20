@@ -61,6 +61,9 @@ class Line(object):
 
 
     def use_starting_values(self):
+        """ Starting values are used for the first frame and to realign the values
+        when a detected position goes off track
+        """
         self.detected = True
         self.recent_xfitted.append(self.line_fitx)
         self.bestx = self.line_fitx
@@ -73,6 +76,10 @@ class Line(object):
 
 
     def use_staged_values(self):
+        """ Staged values are typically used for most frames. It takes the 'temporary'
+        values calculated by _fit_line_polynomial() and updates the line deque's and the
+        averaged values.
+        """
         # self.detected = True
         # self.detected = True
         self.recent_xfitted.append(self.line_fitx)
@@ -100,6 +107,8 @@ class Line(object):
 
     def _fit_line_polynomial(self, frame_shape):
         """ from lesson 9.4
+            Combined the polyfit(), lines, curves and other calculations into this
+            single method as all the necessary data was right here.
         """
 
         # --- coefficients of line
@@ -115,7 +124,7 @@ class Line(object):
             line_fitx = 1*_ploty**2 + 1*_ploty
             x_intercept = 0
 
-        # --- curvature
+        # --- curvature  recalculate to convert from pixels to meters--
         y_eval = np.max(_ploty)*self.ym_per_pix # convert from p to m
         line_fit_m = np.polyfit((self.ally*self.ym_per_pix), (self.allx*self.xm_per_pix), 2) # convert from p to m
 
