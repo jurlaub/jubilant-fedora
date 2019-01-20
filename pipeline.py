@@ -568,7 +568,7 @@ if __name__ == "__main__":
 
     fName = "project_video.mp4"
     # fName = "challenge_video.mp4"
-    out = "all_writeup/{}".format(fName)
+    out = "{}".format(fName)
     pl.extract_and_process_video(fName, out)
 
     # fName1 = "straight_lines1.jpg"
