@@ -566,10 +566,10 @@ if __name__ == "__main__":
 
     pl = Pipeline()
 
-    fName = "project_video.mp4"
-    # fName = "challenge_video.mp4"
-    out = "{}".format(fName)
-    pl.extract_and_process_video(fName, out)
+    # fName = "project_video.mp4"
+    # # fName = "challenge_video.mp4"
+    # out = "{}".format(fName)
+    # pl.extract_and_process_video(fName, out)
 
     # fName1 = "straight_lines1.jpg"
     # fName = "straight_lines2.jpg"
@@ -578,12 +578,16 @@ if __name__ == "__main__":
     # fName = "test3.jpg"
 
 
-    # fName1 = "test5.jpg"
+    fName1 = "test5.jpg"
     # fName2 = "test6.jpg"
     # fName3 = "test7.jpg"
     # fName = "test6.jpg"
 
-
+    # fName = "camera_cal/calibration1.jpg"
+    # fName = load_frame()
+    cal_img = load_frame("test_images/{}".format(fName1))
+    cal_img = pl.undistort(cal_img)
+    save_frame(cal_img, fName1, "all_writeup", "undistort")
 
     # --- pipe test
     # load image, process and obtain lines, save to file

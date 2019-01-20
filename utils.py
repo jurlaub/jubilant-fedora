@@ -102,6 +102,8 @@ def cameraCalibration():
             if DEBUG: print("{} corners not found".format(fname))
             pass
 
+    img = cv2.imread('camera_cal/test2.jpg')
+    ajusted_image, cMatrix, dCoeff = calibrateAndUndistort(img, objpoints, ipoints )
     # --- save calibration files to file ---
     save_pickle = {}
     save_pickle["cMatrix"] = cMatrix
