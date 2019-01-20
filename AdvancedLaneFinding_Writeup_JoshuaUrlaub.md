@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./all_writeup/image_calibrate/undistortedcalibration1.jpg "Undistorted Cal Image"
-[image6]: ./all_writeup/undistortcal_test1.jpg "Undistorted Image"
+[image6]: ./all_writeup/undistorttest5.jpg "Undistorted Image"
 [image2]: ./test_images/test1.jpg "Road Transformed"
 [image3]: ./all_writeup/image_transform/thresholdstraight_lines1.jpg "Transform Example"
 
@@ -110,8 +110,7 @@ I used a variety of test images to ensure that the transform was working as expe
 This is an example of the image using the points in the code
 ![alt text][image4]
 
-This is alternative example that I considered using. It basically matched the full dimensions of the image shape.
-![alt text][image5]
+
 
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
@@ -139,7 +138,6 @@ The overlay results are plotted in *pipeline.py* **overlay_path_and_calculations
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Here's a [link to my video result](./all_writeup/project_video.mp4)
 
@@ -149,6 +147,11 @@ Here's a [link to my video result](./all_writeup/project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
+There were a couple of areas that took some effort to understand. The 'proper' way to warp transform an image was a big one. It took a number of days of testing to understand how to warp the image to something that seemed reasonable.
+This is alternative perspective example that I considered using. It basically matched the full dimensions of the image shape.
+![alt text][image5]
+This version may be more robust for processing although you would need to handle the more complicated image. In the end, I went when the other perspective because that more closely matched the lesson. As I was taking each item step by step, I did not experiment with the alternative version.
 
+The error handling / sanity checking is very primative. **sanity_check**  ( ln 364) is the method used. You can see another method where I experiemented with some other checks but couldn't get it to work satisfatory in the time I had available. Other approaches would be that I would like to make the line processing/fitting be single lane so that I could have the code re-examine a given lane.
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.
+The line detection definately has problems with extra lines on the road - like with cracks and construction lanes. Running the code on the challenge file helped identify some issues with the code and led to code changes that added resiliance. However the changes are nowhere near enough finish the challenges.
