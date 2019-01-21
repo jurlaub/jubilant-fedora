@@ -43,7 +43,7 @@ The calibration code uses a set of methods from the utils.py file.
 1. **obtainCalibrationPointsFromFile()** (ln 30 utils.py)
 2. **cameraCalibration()** (ln 63 utils.py)
 
-For this, I used the test calibration files provided for the project. Not all the provided images were valid. Essentailly, I learned that the cv2.findChessboardCorners really does fail if the inner & outer corners were not fully visible. Even trying to specify a subset of the corners is not valid. I generated the camera calibration and distortion coefficients and saved to a pickle file. This file is pulled into the Pipeline class when it is instantiated.
+For this, I used the test calibration files provided for the project. Not all the provided images were valid. Essentailly, I learned that the cv2.findChessboardCorners really does fail if the inner & outer corners were not fully visible. Even trying to specify a subset of the corners is not valid. I generated the camera calibration and distortion coefficients and saved to a file. This file is pulled into the Pipeline class when it is instantiated.
 
 Here is a example of a calibrated image:
 
@@ -105,7 +105,7 @@ For example: using the bottom_edge = 22.333 sets the lower bounds of projected o
 ```
 The source & destination points can be derived from the above code.
 
-I used a variety of test images to ensure that the transform was working as expected. Interesting points to note is that the output image orientation is depenent on the order of the points.
+I used a variety of test images to ensure that the transform was working as expected. Interesting point to note is that the output image orientation is depenent on the order of the points.
 
 This is an example of the image using the points in the code
 ![alt text][image4]
@@ -124,7 +124,7 @@ The polyfit function was moved to the *Line* class **_fit_line_polynomial()** (l
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
 The radius of curvature is calculated in the *Line* class **_fit_line_polynomial()** (ln 123 line.py).  The vehicle postion is found in *pipeline.py line 308-333* in the overlay class. The hard thing was to get the radius to align with the 1km mentioned in the
-**tips and tricks** page. The key is probably the conversion from pixels to meters. If you look at **_fit_line_polynomial()** I calculate the curvature data separate from the pixel line fit data. The output values are still low.
+**tips and tricks** page. The key is probably the conversion from pixels to meters. If you look at **_fit_line_polynomial()** I calculate the curvature data separate from the pixel line fit data. The output values were still low.
 
 
 
@@ -154,4 +154,4 @@ This version may be more robust for processing although you would need to handle
 
 The error handling / sanity checking is very primative. **sanity_check**  ( ln 364) is the method used. You can see another method where I experiemented with some other checks but couldn't get it to work satisfatory in the time I had available. Other approaches would be that I would like to make the line processing/fitting be single lane so that I could have the code re-examine a given lane.
 
-The line detection definately has problems with extra lines on the road - like with cracks and construction lanes. Running the code on the challenge file helped identify some issues with the code and led to code changes that added resiliance. However the changes are nowhere near enough finish the challenges.
+The line detection definately has problems with extra lines on the road - like with cracks and construction lanes. Running the code on the challenge file helped identify some issues with the code and led to code changes that added resiliance. However the changes are nowhere near enough finish the challenges. I handle missing or empty pixels in the Line class. If no pixels are detected, then the class will not seek to use them to calculate/ update the current frame variables. This problem was discovered when experiementing with different settings and also when running the challenge file.
